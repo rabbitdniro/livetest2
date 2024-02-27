@@ -29,7 +29,7 @@ const tasks = ref([
 </script>
 
 <template>
-  <ShowObject v-model="tasks"/>
+  <ShowObject :taskList="tasks"/>
 </template>
 
 <style scoped>

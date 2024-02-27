@@ -1,6 +1,6 @@
 <script setup>
   import {ref} from "vue";
-  const props = defineProps(["modelValue"]);
+  const props = defineProps(["taskList"]);
 
   const userName = ref("");
   const userTime = ref("");
@@ -17,20 +17,25 @@
     itemIndex.value = "";
     modal.close();
   }
+
+  function updateList(x) {
+    props.taskList[x].name = userName.value;
+    props.taskList[x].time = userTime.value;
+  }
 </script>
 
 <template>
-  <div v-for="(item, index) in modelValue" :key="index">
+  <div v-for="(item, index) in taskList" :key="index">
     <li class="mb-3" style="list-style-type: none;">
-      {{ item }}
-      <span class="mx-3">
+      <span>Name: {{ item.name }}</span> <span class="mx-3">Time: {{ item.time }}</span>
+      <span class="">
         <button @click="shoWPop(index)" type="button" class="btn btn-primary">Edit</button>
       </span>
     </li>
   </div>
 
   <dialog id="modal">
-    <form action="">
+    <form action="" @submit.prevent>
       <label for="name">Name: </label>
       <input v-model="userName" type="text" name="name" id="name" class="form-control">
       <br>
@@ -39,7 +44,7 @@
       <br>
       <div class="row">
         <div class="col">
-          <button @click="closePop()" type="button" class="btn btn-outline-primary">Submit</button>
+          <button @click="updateList(itemIndex), closePop()" type="button" class="btn btn-outline-primary">Submit</button>
         </div>
       </div>
       
